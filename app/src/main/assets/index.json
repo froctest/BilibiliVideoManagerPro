@@ -1,0 +1,40 @@
+{
+  "video": [
+    {
+      "id": 80,
+      "base_url": "https://xy121x224x197x35xy.mcdn.bilivideo.cn:8082/v1/resource/1189394743-1-31101.m4s?build=7350200&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&bvc=vod&bw=24374&deadline=1689050446&e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&gen=playurlv2&logo=90000000&mid=485264494&nbs=1&nettype=1&oi=3746221165&orderid=0%2C3&os=08hbv&platform=android&sign=9839ba&traceid=trmbLZloSxRaGV_0_u_a&uipk=5&uparams=e%2Cuipk%2Cnbs%2Cdeadline%2Cgen%2Cos%2Coi%2Ctrid%2Cmid%2Cplatform&upsig=5c43a62b7c9b7ce34b93412044e687c5",
+      "backup_url": [
+        "https://xy114x237x95x117xy.mcdn.bilivideo.cn:8082/v1/resource/1189394743-1-31101.m4s?build=7350200&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&bvc=vod&bw=24374&deadline=1689050446&e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&gen=playurlv2&logo=50000000&mid=485264494&nbs=1&nettype=1&oi=3746221165&orderid=1%2C3&os=08cbv&platform=android&sign=9839ba&traceid=trBmUipucpXKMg_0_u_a&uipk=5&uparams=e%2Cuipk%2Cnbs%2Cdeadline%2Cgen%2Cos%2Coi%2Ctrid%2Cmid%2Cplatform&upsig=31994ef6171b307ce41ab21218e87da4",
+        "https://upos-sz-mirror08h.bilivideo.com/upgcxcode/43/47/1189394743/1189394743-1-31101.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&uipk=5&nbs=1&deadline=1689050446&gen=playurlv2&os=08hbv&oi=3746221165&trid=e50d8675fb9d428ebb271cc7ca8f62cfu&mid=485264494&platform=android&upsig=5c43a62b7c9b7ce34b93412044e687c5&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=1&orderid=0,3&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&build=7350200&bw=24374&logo=90000000"
+      ],
+      "bandwidth": 188331,
+      "codecid": 12,
+      "size": 389987,
+      "md5": "3695059eebc20632a41dad4d8181327a",
+      "no_rexcode": false,
+      "frame_rate": "30.303",
+      "width": 1920,
+      "height": 1080,
+      "dash_drm_type": 0
+    }
+  ],
+  "audio": [
+    {
+      "id": 30232,
+      "base_url": "https://upos-sz-mirror08h.bilivideo.com/upgcxcode/43/47/1189394743/1189394743_nb3-1-30232.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&uipk=5&nbs=1&deadline=1689050446&gen=playurlv2&os=08hbv&oi=3746221165&trid=e50d8675fb9d428ebb271cc7ca8f62cfu&mid=485264494&platform=android&upsig=1fb3ae85cfee426bfe0ec22676d012e1&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=1&orderid=0,3&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&build=7350200&bw=12872&logo=90000000",
+      "backup_url": [
+        "https://upos-sz-mirror08c.bilivideo.com/upgcxcode/43/47/1189394743/1189394743_nb3-1-30232.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&uipk=5&nbs=1&deadline=1689050446&gen=playurlv2&os=08cbv&oi=3746221165&trid=e50d8675fb9d428ebb271cc7ca8f62cfu&mid=485264494&platform=android&upsig=9ea5cc59752672eb024cbfd91c8ac79d&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=1&orderid=1,3&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&build=7350200&bw=12872&logo=50000000",
+        "https://upos-sz-mirrorhwb.bilivideo.com/upgcxcode/43/47/1189394743/1189394743_nb3-1-30232.m4s?e=ig8euxZM2rNcNbdlhoNvNC8BqJIzNbfqXBvEuENvNC8aNEVEtEvE9IMvXBvE2ENvNCImNEVEIj0Y2J_aug859r1qXg8xNEVE5XREto8GuFGv2U7SuxI72X6fTr859IB_&uipk=5&nbs=1&deadline=1689050446&gen=playurlv2&os=hwbbv&oi=3746221165&trid=e50d8675fb9d428ebb271cc7ca8f62cfu&mid=485264494&platform=android&upsig=d67d20cf66ee46867dd1a4b762d4ba65&uparams=e,uipk,nbs,deadline,gen,os,oi,trid,mid,platform&bvc=vod&nettype=1&orderid=2,3&buvid=XX61C266C2BEC9832198F62CACFC4127C0196&build=7350200&bw=12872&logo=50000000"
+      ],
+      "bandwidth": 99111,
+      "codecid": 0,
+      "size": 205966,
+      "md5": "0cca0646e2deda0c81d3ee7ae963bb62",
+      "no_rexcode": false,
+      "frame_rate": "",
+      "width": 0,
+      "height": 0,
+      "dash_drm_type": 0
+    }
+  ]
+}
