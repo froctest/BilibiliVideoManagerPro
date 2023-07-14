@@ -76,11 +76,11 @@ dependencies {
     implementation 'org.apache.commons:commons-compress:1.23.0'
     implementation "io.coil-kt:coil:2.4.0" // 替换为合适的版本号
     implementation "io.coil-kt:coil-compose:2.4.0"
-    implementation 'com.google.android.exoplayer:exoplayer:2.19.0'
+    implementation 'androidx.media3:media3-exoplayer:1.1.0'
+    implementation 'androidx.media3:media3-ui:1.1.0'
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.3.8'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 //可选,AVD用
 //    implementation 'com.github.ctiao:ndkbitmap-armv5:0.9.21'
 //    implementation 'com.github.ctiao:ndkbitmap-x86:0.9.21'
-//    implementation 'com.github.CarGuo.GSYVideoPlayer:GSYVideoPlayer:v8.3.5-release-jitpack'
 }

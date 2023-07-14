@@ -138,9 +138,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .pullRefresh(state)) {
                             LazyColumn() {
-                                items(projects, key = {
-                                    it.bvid
-                                }) {project ->
+                                items(projects) {project ->
                                     Card(modifier = Modifier.padding(4.dp)) {
                                         var progress by remember {
                                             mutableStateOf(0f)

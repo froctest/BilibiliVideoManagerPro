@@ -1,20 +1,13 @@
 package com.frstudio.bilibilivideomanagerpro
-//
-//
-//import android.os.Bundle
-//import android.view.View
-//import android.widget.ImageView
-//import androidx.activity.ComponentActivity
-//import androidx.activity.compose.setContent
-//import com.shuyu.gsyvideoplayer.GSYVideoManager
-//import com.shuyu.gsyvideoplayer.utils.OrientationUtils
-//import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
-//
-//
-///**
-// * 横屏不旋转的 Demo
-// */
-//class SimplePlayer : ComponentActivity() {
+
+
+import androidx.activity.ComponentActivity
+
+
+/**
+ * 横屏不旋转的 Demo
+ */
+class SimplePlayer : ComponentActivity() {
 //    var videoPlayer: StandardGSYVideoPlayer? = null
 //    var orientationUtils: OrientationUtils? = null
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,9 +15,9 @@ package com.frstudio.bilibilivideomanagerpro
 //        setContent {
 //
 //        }
-//        init()
+////        init()
 //    }
-//
+
 //    private fun init() {
 //        videoPlayer = findViewById(R.id.video_player) as StandardGSYVideoPlayer?
 //        val source1 = "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"
@@ -85,8 +78,8 @@ package com.frstudio.bilibilivideomanagerpro
 //        videoPlayer.setVideoAllCallBack(null)
 //        super.onBackPressed()
 //    }
-//}
-//
+}
+
 //class VideoPlayerActivity: ComponentActivity() {
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
