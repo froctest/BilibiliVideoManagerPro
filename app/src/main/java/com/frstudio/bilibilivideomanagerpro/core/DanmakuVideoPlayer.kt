@@ -1,5 +1,6 @@
 package com.frstudio.bilibilivideomanagerpro.core
 
+import android.media.MediaPlayer
 import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
@@ -19,7 +20,24 @@ import master.flame.danmaku.danmaku.model.android.DanmakuContext
 import master.flame.danmaku.ui.widget.DanmakuView
 
 @Composable
-fun DanmakuVideoPlayer(uri: Uri, danmaku: DocumentFile?) {
+fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, danmaku: DocumentFile?) {
+    var musicPlayer: MediaPlayer? by remember {
+        mutableStateOf(null)
+    }
+    MusicPlayer(justAudio) {
+        musicPlayer = it
+    }
+    DanmakuVideoPlayer(justVideo, danmaku, start = {
+        musicPlayer?.seekTo(it.toInt())
+        musicPlayer?.start()
+    }, pause = {
+        musicPlayer?.pause()
+    }, seek = {
+        musicPlayer?.seekTo(it.toInt())
+    })
+}
+@Composable
+fun DanmakuVideoPlayer(uri: Uri, danmaku: DocumentFile?, start: (Long) -> Unit = {}, pause: () -> Unit = {}, seek: (Long) -> Unit = {}, resultPlayer: (ExoPlayer) -> Unit = {}) {
     var exoPlayer: ExoPlayer? by remember {
         mutableStateOf(null)
     }
@@ -36,7 +54,11 @@ fun DanmakuVideoPlayer(uri: Uri, danmaku: DocumentFile?) {
                         if (!playWhenReady) {
                             //暂停
                             danmakuView?.pause()
-                        } else danmakuView?.start(exo.currentPosition)
+                            pause()
+                        } else {
+                            danmakuView?.start(exo.currentPosition)
+                            start(exo.currentPosition)
+                        }
                     }
                 }
 
@@ -46,16 +68,25 @@ fun DanmakuVideoPlayer(uri: Uri, danmaku: DocumentFile?) {
                     reason: Int
                 ) {
                     super.onPositionDiscontinuity(oldPosition, newPosition, reason)
-                    danmakuView?.seekTo(newPosition.positionMs)
+                    val pos = newPosition.positionMs
+                    danmakuView?.seekTo(pos)
+                    seek(pos)
                 }
 
             })
         }
-        BDM(danmaku = danmaku, onPrepared = {
-            //弹幕准备就绪!
-        }) { dV: DanmakuView, danmakuContext: DanmakuContext ->
-            danmakuView = dV
-//            Log.e("CC", "${dV.show()}")
+        Danmaku(danmaku) {
+            danmakuView = it
         }
+    }
+}
+
+@Composable
+fun Danmaku(danmaku: DocumentFile?, resultDanmaku: (DanmakuView) -> Unit) {
+    BDM(danmaku = danmaku, onPrepared = {
+        //弹幕准备就绪!
+    }) { dV: DanmakuView, danmakuContext: DanmakuContext ->
+        resultDanmaku(dV)
+//            Log.e("CC", "${dV.show()}")
     }
 }

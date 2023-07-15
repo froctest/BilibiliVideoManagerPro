@@ -36,6 +36,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
 import com.frstudio.bilibilivideomanagerpro.compent.OnBackPress
+import com.frstudio.bilibilivideomanagerpro.core.BiliDirSaved
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProject
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProjectPage
 import com.frstudio.bilibilivideomanagerpro.core.requireStoragePermission
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
                     }
                     biliDir = dir
                 }
+                if (BiliDirSaved) invoker()
                 LaunchedEffect(key1 = biliDir) {
                     withContext(Dispatchers.IO) {
                         biliDir?.let {
@@ -140,47 +142,21 @@ class MainActivity : ComponentActivity() {
                             LazyColumn() {
                                 items(projects) {project ->
                                     Card(modifier = Modifier.padding(4.dp)) {
-                                        var progress by remember {
-                                            mutableStateOf(0f)
-                                        }
-                                        val total by remember {
-                                            mutableStateOf(project.pages.size)
-                                        }
-                                        LaunchedEffect(key1 = Unit) {
-                                            withContext(Dispatchers.IO) {
-                                                for (i in 0 until total) {
-                                                    muxVideoAudio(project.pages[i])
-                                                    progress = total / (i+1).toFloat()
-                                                }
-                                                progress = 1f
-                                            }
-                                        }
                                         SizeAnimatedContent(targetValue = (showProject == project), trueContent = {
-                                            SizeAnimatedContent(
-                                                targetValue = progress != 1f,
-                                                trueContent = {
-                                                    if (total == 1) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                                                    else LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), progress = progress)
-                                                    Text(text = project.entry.title)
-                                                }
-                                            ) {
-                                                var willFixPage: BiliVideoProjectPage? by remember {
-                                                    mutableStateOf(null)
-                                                }
-                                                BiliVideoInfoPage(project = project, fix = {
-                                                    willFixPage = project.pages[it]
-                                                }) {
-                                                    showProject = if (showProject == project) null else project
-                                                }
-                                                willFixPage?.run{
-                                                    Fix(page = this) {
-                                                        willFixPage = null
-                                                    }
+                                            var willFixPage: BiliVideoProjectPage? by remember {
+                                                mutableStateOf(null)
+                                            }
+                                            BiliVideoInfoPage(project = project, fix = {
+                                                willFixPage = project.pages[it]
+                                            }) {
+                                                showProject = if (showProject == project) null else project
+                                            }
+                                            willFixPage?.run{
+                                                Fix(page = this) {
+                                                    willFixPage = null
                                                 }
                                             }
                                         }) {
-                                            if (total == 1) LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                                            else LinearProgressIndicator(modifier = Modifier.fillMaxWidth(), progress = progress)
                                             BiliVideoListItem(project = project) {
                                                 showProject = if (showProject == project) null else project
                                             }

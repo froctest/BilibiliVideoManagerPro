@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackParameters
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.frstudio.bilibilivideomanagerpro.app
@@ -25,14 +26,15 @@ fun VideoPlayer(uri: Uri, resultPlayer: ((ExoPlayer) -> Unit)? = null){
             .build()
             .apply {
                 playWhenReady = false
+                playbackParameters = PlaybackParameters.DEFAULT
+                setPlaybackSpeed(1.0F)
             })
     }
-    //uri可以时网络url资源，这里我adb push了一个视频到使用sd卡根目录
-    val mediaItem by remember(uri) {
+    val mediaItem: MediaItem by remember(uri) {
         mutableStateOf(MediaItem.fromUri(uri))
     }
-//    var savedPos by remember(uri) {
-//        mutableStateOf(0L)
+//    val savePos: Long by remember(uri) {
+//        mutableStateOf(uri.getSave("savePos") { 0L })
 //    }
     LaunchedEffect(uri) {
 //        try {
@@ -40,11 +42,15 @@ fun VideoPlayer(uri: Uri, resultPlayer: ((ExoPlayer) -> Unit)? = null){
 //        } catch (_: Exception) {}
         exoPlayer.setMediaItem(mediaItem)
         exoPlayer.prepare()
-//        exoPlayer.seekTo(savedPos)
+//        if (savePos != 0L) {
+//            exoPlayer.seekTo(savePos)
+//            exoPlayer.play()
+//        }
     }
     DisposableEffect(Unit) {
         onDispose {
-//            savedPos = exoPlayer.currentPosition
+//            uri.saveStorage["mediaItem"] = mediaItem
+//            uri.saveStorage["savePos"] = exoPlayer.currentPosition
             exoPlayer.release()
             //TODO 好像要处理野指针
         }

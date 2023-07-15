@@ -71,7 +71,8 @@ fun VideoInfo(
 ) {
     Column() {
         Row() {
-            NetworkImage(url = coverUrl, modifier = Modifier.size(60.dp)
+            NetworkImage(url = coverUrl, modifier = Modifier
+                .size(60.dp)
                 .clip(CircleShape))
             Column() {
                 Text(text = title)
@@ -81,7 +82,6 @@ fun VideoInfo(
                     if (downloadBytes == totalBytes) {
                         Text(text = storage(totalBytes))
                     } else Text(text = "${storage(downloadBytes)} / ${storage(totalBytes)}")
-
                 }
             }
         }
@@ -93,7 +93,9 @@ fun VideoInfo(
 @Composable
 fun UpInfo(modifier: Modifier = Modifier, name: String = "UP主", avatarUrl: String = "https://i0.hdslb.com/bfs/face/e24e4ac984f7d29f88ff279e14fd4bb2a609d06d.jpg") {
     Row(modifier) {
-        NetworkImage(url = avatarUrl, modifier = Modifier.size(40.dp).padding(5.dp)
+        NetworkImage(url = avatarUrl, modifier = Modifier
+            .size(40.dp)
+            .padding(5.dp)
             .clip(CircleShape))
         Column {
             Text(text = name)

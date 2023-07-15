@@ -9,6 +9,9 @@ import com.frstudio.bilibilivideomanagerpro.utils.fd
 import java.io.FileDescriptor
 import java.nio.ByteBuffer
 
+/**
+ * 自动判断是否已经存在合成完成的视频,若存在,立即返回,不存在,放置缓存供下一次直接返回
+ */
 fun muxVideoAudio(page: BiliVideoProjectPage): FileDescriptor {
     val dcDir = page.pageDir.findFile(".dc")?:page.pageDir.createDirectory(".dc")!!
     var mux = dcDir.findFile("mux.mp4")

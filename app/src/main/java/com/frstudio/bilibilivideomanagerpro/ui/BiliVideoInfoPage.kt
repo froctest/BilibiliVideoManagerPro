@@ -1,6 +1,5 @@
 package com.frstudio.bilibilivideomanagerpro.ui
 
-import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -23,9 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.frstudio.bilibilivideomanagerpro.R
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProject
 import com.frstudio.bilibilivideomanagerpro.core.DanmakuVideoPlayer
-import com.frstudio.bilibilivideomanagerpro.core.getClearText
 import com.frstudio.bilibilivideomanagerpro.core.openFileWithExternalApp
-import com.frstudio.bilibilivideomanagerpro.core.saveFile
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,20 +46,21 @@ fun BiliVideoInfoPage(
             var currentIndex by remember {
                 mutableStateOf(0)
             }
-            var currentPage by remember(pages, currentIndex) {
+            val currentPage by remember(pages, currentIndex) {
                 mutableStateOf(pages[currentIndex])
             }
-            var currentMux by remember(pages, currentIndex) {
+            val currentMux by remember(pages, currentIndex) {
                 mutableStateOf(currentPage.mux)
             }
             val currentDanmaku by remember(pages, currentIndex) {
                 mutableStateOf(currentPage.danmakuFile)
             }
             val currentPartTitle by remember(pages, currentIndex) {
-                mutableStateOf(currentPage.pageData.part?:entry.title)
+                mutableStateOf(currentPage.partTitle)
             }
-            DanmakuVideoPlayer(currentMux!!.uri, danmaku = currentDanmaku)
-            Text(text = entry.title)
+            if (currentMux != null) DanmakuVideoPlayer(currentMux!!.uri, danmaku = currentDanmaku)
+            else DanmakuVideoPlayer(currentPage.justVideo.uri, currentPage.justAudio.uri, danmaku = currentDanmaku)
+            Text(text = entry.title, color = if (currentMux == null) Color.Red else Color.Unspecified)
             if (pages.size > 1) {
                 LazyRow() {
                     itemsIndexed(pages) { lIndex, item ->
@@ -77,15 +75,7 @@ fun BiliVideoInfoPage(
                 }
             }
             Row() {
-                var outputUri: Uri? by remember {
-                    mutableStateOf(null)
-                }
-                val export = saveFile(defaultName = "${getClearText(currentPartTitle)}.mp4") {
-                    if (it != null)outputUri = it
-                }
-                outputUri?.let { output ->
-                    ExportDialog(currentMux!!.uri, output) { outputUri = null }
-                }
+                val export = exportVideo(project, page = currentPage)
                 IconButton(onClick = { export() }, Modifier.padding(3.dp)) {
                     Icon(painter = painterResource(id = R.drawable.export), contentDescription = "导出")
                 }
@@ -94,6 +84,7 @@ fun BiliVideoInfoPage(
                 }, Modifier.padding(3.dp)) {
                     Icon(painter = painterResource(id = R.drawable.open), contentDescription = "打开")
                 }
+                //修复当前Page
                 IconButton(onClick = {
                     fix(currentIndex)
                 }) {
