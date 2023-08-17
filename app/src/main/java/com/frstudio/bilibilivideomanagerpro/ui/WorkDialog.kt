@@ -6,7 +6,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.window.DialogProperties
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun WorkDialog(
@@ -18,7 +20,9 @@ fun WorkDialog(
 ) {
     LaunchedEffect(Unit) {
         val job = launch {
-            work()
+            withContext(Dispatchers.IO) {
+                work()
+            }
         }
         job.join()
     }

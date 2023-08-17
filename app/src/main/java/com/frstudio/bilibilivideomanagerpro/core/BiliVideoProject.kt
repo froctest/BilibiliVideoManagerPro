@@ -1,5 +1,6 @@
 package com.frstudio.bilibilivideomanagerpro.core
 
+import androidx.compose.runtime.toMutableStateList
 import androidx.documentfile.provider.DocumentFile
 import com.frstudio.bilibilivideomanagerpro.app
 import com.google.gson.Gson
@@ -14,14 +15,22 @@ data class BiliVideoProject(val root: DocumentFile) {
             e.printStackTrace()
             null
         }
-    }
+    }.toMutableStateList()
+    val pageCount = root.listFiles().filter { it.isDirectory }.size
     val bvid by lazy {
         firstPageEntry.bvid
     }
-    val firstPageEntry = pages[0].entry
+    val firstPage = root.listFiles().firstNotNullOf {
+        try {
+            BiliVideoProjectPage(it)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+    val firstPageEntry = firstPage.entry
     val entry: Entry by lazy {
-        val first = pages[0]
-        val fEntry = first.entry
+        val fEntry = firstPage.entry
         Entry(
             fEntry.title,
             fEntry.cover,
@@ -67,7 +76,7 @@ data class BiliVideoProjectPage(val pageDir: DocumentFile) {
         entry.page_data
     }
     val dc: DocumentFile? get() = pageDir.findFile(".dc")?.let { if (it.isDirectory) it else null }
-    val mux: DocumentFile? get() = dc?.findFile("mux.mp4")
+    val mux: DocumentFile? get() = dc?.findFile("mux-$title.mp4")
 
 
     val title: String = entry.title
@@ -75,7 +84,7 @@ data class BiliVideoProjectPage(val pageDir: DocumentFile) {
 
     override fun equals(other: Any?): Boolean {
         if (other !is BiliVideoProjectPage) return false
-        return entry.bvid == other.entry.bvid
+        return entry.bvid == other.entry.bvid && entry.page_data.page == other.entry.page_data.page
     }
 
     override fun hashCode(): Int {

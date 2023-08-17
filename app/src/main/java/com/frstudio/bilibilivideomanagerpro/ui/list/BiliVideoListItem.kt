@@ -34,6 +34,7 @@ fun BiliVideoListItem(modifier: Modifier = Modifier, project: BiliVideoProject, 
         entry.total_bytes,
         entry.owner_name,
         entry.owner_avatar,
+        pageCount = project.pageCount,
         clicked
     )
 }
@@ -50,12 +51,13 @@ fun BiliVideoListItem(
     totalBytes: Long = 114514,
     upName: String = "UP主",
     owner_avatarUrl: String = "https://i0.hdslb.com/bfs/face/e24e4ac984f7d29f88ff279e14fd4bb2a609d06d.jpg",
+    pageCount: Int = 3,
     clicked: () -> Unit = {}
 ) {
     Card(modifier = modifier
         .fillMaxWidth()
         .animateContentSize(), onClick = clicked) {
-        VideoInfo(title, coverUrl, duration, downloadBytes, totalBytes)
+        VideoInfo(title, coverUrl, duration, downloadBytes, totalBytes, pageCount)
         UpInfo(Modifier.padding(6.dp), upName, owner_avatarUrl)
     }
 }
@@ -67,7 +69,8 @@ fun VideoInfo(
     coverUrl: String = "http://i2.hdslb.com/bfs/archive/a7feade2d3464bce826f2e48e7699fe0bab2a411.jpg",
     duration: Long = 67437834,
     downloadBytes: Long = 114514,
-    totalBytes: Long = 114514
+    totalBytes: Long = 114514,
+    pageCount: Int = 3
 ) {
     Column() {
         Row() {
@@ -79,9 +82,8 @@ fun VideoInfo(
                 Row() {
                     Text(text = "时长: ${formatMilliseconds(duration)}")
                     Spacer(modifier = Modifier.width(12.dp))
-                    if (downloadBytes == totalBytes) {
-                        Text(text = storage(totalBytes))
-                    } else Text(text = "${storage(downloadBytes)} / ${storage(totalBytes)}")
+                    Text(text = if (downloadBytes == totalBytes) storage(totalBytes) else "${storage(downloadBytes)} / ${storage(totalBytes)}")
+                    if (pageCount != 1) Text(text = "共${pageCount}集")
                 }
             }
         }

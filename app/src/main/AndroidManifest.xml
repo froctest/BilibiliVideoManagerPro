@@ -16,8 +16,9 @@
         android:theme="@style/Theme.BilibiliVideoManagerPro"
         tools:targetApi="31"
         android:name=".App">
+        <activity android:name=".crash.CrashHandler$CrashActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.BilibiliVideoManagerPro">
@@ -27,7 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".test.AActivity"/>
+        <activity android:name=".ui.activity.VideoPlayerActivity" android:configChanges="orientation" android:screenOrientation="landscape"/>
+        <activity android:name=".ui.activity.BiliVideoInfoActivity" android:configChanges="orientation" android:screenOrientation="portrait"/>
+        <activity android:name=".ui.activity.DingzhenActivity" android:configChanges="orientation" android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

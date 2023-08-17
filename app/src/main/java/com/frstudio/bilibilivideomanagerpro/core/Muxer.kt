@@ -14,15 +14,15 @@ import java.nio.ByteBuffer
  */
 fun muxVideoAudio(page: BiliVideoProjectPage): FileDescriptor {
     val dcDir = page.pageDir.findFile(".dc")?:page.pageDir.createDirectory(".dc")!!
-    var mux = dcDir.findFile("mux.mp4")
+    var mux = dcDir.findFile("mux-${page.title}.mp4")
     if (mux != null) return mux.fd
-    dcDir.findFile("tmp_mux.mp4")?.delete()
-    mux = dcDir.createFile("video/mp4", "tmp_mux.mp4")!!
+    dcDir.findFile("tmp_mux-${page.title}.mp4")?.delete()
+    mux = dcDir.createFile("video/mp4", "tmp_mux-${page.title}.mp4")!!
     val videoFD = page.justVideo.fd
     val audioFD = page.justAudio.fd
     val outputFD = mux.fd
     muxVideoAudio(videoFD, audioFD, outputFD)
-    mux.renameTo("mux.mp4")
+    mux.renameTo("mux-${page.title}.mp4")
     try {
         outputFD.sync()
     }catch (e: Exception) {

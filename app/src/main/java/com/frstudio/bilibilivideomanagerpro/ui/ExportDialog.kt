@@ -1,6 +1,7 @@
 package com.frstudio.bilibilivideomanagerpro.ui
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,6 +23,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun ExportDialog(input: Uri, output: Uri, close: () -> Unit) {
+    Log.e("","")
     var progress by remember { mutableStateOf(0.0f) }
     val totalBytes by remember {
         mutableStateOf(DocumentFile.fromSingleUri(app, input)!!.length())
