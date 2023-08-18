@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BilibiliVideoManagerPro</string>
+    <string name="title_activity_cliper">CliperActivity</string>
 </resources>

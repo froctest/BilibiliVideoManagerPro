@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
@@ -23,6 +24,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +43,7 @@ import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProjectPage
 import com.frstudio.bilibilivideomanagerpro.core.requireStoragePermission
 import com.frstudio.bilibilivideomanagerpro.core.getBiliVideoProject
 import com.frstudio.bilibilivideomanagerpro.ui.BiliVideoInfoPage
+import com.frstudio.bilibilivideomanagerpro.ui.GreenPoint
 import com.frstudio.bilibilivideomanagerpro.ui.SizeAnimatedContent
 import com.frstudio.bilibilivideomanagerpro.ui.WorkDialog
 import com.frstudio.bilibilivideomanagerpro.ui.list.BiliVideoListItem
@@ -139,8 +142,19 @@ class MainActivity : ComponentActivity() {
                                                 }
                                             }
                                         }) {
-                                            BiliVideoListItem(project = project) {
-                                                showProject = if (showProject == project) null else project
+                                            Box {
+                                                BiliVideoListItem(project = project) {
+                                                    showProject = if (showProject == project) null else project
+                                                }
+                                                var showGreenPoint by remember(project) {
+                                                    mutableStateOf(false)
+                                                }
+                                                LaunchedEffect(key1 = project) {
+                                                    project.pages.forEach {
+                                                        if (it.mux == null) showGreenPoint = true
+                                                    }
+                                                }
+                                                if (showGreenPoint) GreenPoint(modifier = Modifier.padding(6.dp).size(12.dp))
                                             }
                                         }
                                     }

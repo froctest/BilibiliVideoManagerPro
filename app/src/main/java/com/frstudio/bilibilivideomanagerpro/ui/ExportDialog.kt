@@ -1,7 +1,7 @@
 package com.frstudio.bilibilivideomanagerpro.ui
 
+import VideoClipUtils
 import android.net.Uri
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,12 +18,50 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
 import com.frstudio.bilibilivideomanagerpro.app
+import com.frstudio.bilibilivideomanagerpro.utils.tempFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
+fun ClipDialog(input: Uri, output: Uri, startPoint: Long, endPoint: Long,autoClose: Boolean = false, close: () -> Unit) {
+    var isComplete by remember {
+        mutableStateOf(false)
+    }
+    WorkDialog(
+        work = {
+            try {
+                withContext(Dispatchers.IO) {
+//                    trimMP4(input, output, startPoint, endPoint)
+                    val tempFile = tempFile(input)
+                    VideoClipUtils.clip(tempFile, output, startPoint, endPoint)
+                    isComplete = true
+                }
+            } catch (e: Exception) {
+                // 处理异常情况
+            }
+        },
+        title = (if (isComplete) "完成!" else "剪辑中..."),
+        text = {
+            if (!isComplete) {
+                LinearProgressIndicator()
+            } else {
+                Text("剪辑完成！")
+            }
+        },
+        confirmButton = {
+            if (isComplete) {
+                if (autoClose) close()
+                else {
+                    Button(onClick = close) {
+                        Text("关闭")
+                    }
+                }
+            }
+        }, close)
+}
+
+@Composable
 fun ExportDialog(input: Uri, output: Uri, close: () -> Unit) {
-    Log.e("","")
     var progress by remember { mutableStateOf(0.0f) }
     val totalBytes by remember {
         mutableStateOf(DocumentFile.fromSingleUri(app, input)!!.length())

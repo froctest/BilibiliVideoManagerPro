@@ -42,6 +42,44 @@ fun exportVideo(page: BiliVideoProjectPage): () -> Unit {
 }
 
 @Composable
+fun exportClippedVideo(page: BiliVideoProjectPage): (startPoint: Long, endPoint: Long) -> Unit {
+    var show by remember {
+        mutableStateOf(false)
+    }
+    var key by remember {
+        mutableStateOf(0L)
+    }
+    var startPoint by remember {
+        mutableStateOf(-1L)
+    }
+    var endPoint by remember {
+        mutableStateOf(-1L)
+    }
+    if (show) {
+        prepareMuxComposable(page = page) {
+            var outputUri: Uri? by remember {
+                mutableStateOf(null)
+            }
+            outputUri?.let { output ->
+                ClipDialog(input = it.uri, output = output, startPoint = startPoint, endPoint = endPoint, autoClose = false) {
+                    outputUri = null
+                    show = false
+                }
+            }
+            saveFile(defaultName = "${getClearText(page.partTitle)}.mp4", key) {
+                if (it != null)outputUri = it
+            }()
+        }()
+    }
+    return { start, end ->
+        startPoint = start
+        endPoint = end
+        show = true
+        key = System.nanoTime()
+    }
+}
+
+@Composable
 fun exportJustAudio(page: BiliVideoProjectPage): () -> Unit {
     var show by remember {
         mutableStateOf(false)

@@ -74,7 +74,9 @@ fun BiliVideoInfoPage(page: BiliVideoProjectPage) {
         dingzhengMode = {
             DingzhenActivity.launch(page.justVideo.uri)
         },
-        videoSplit = {},
+        videoSplit = {
+            ClipperActivity.launch(page)
+        },
         audioExport = {
             export()
         }

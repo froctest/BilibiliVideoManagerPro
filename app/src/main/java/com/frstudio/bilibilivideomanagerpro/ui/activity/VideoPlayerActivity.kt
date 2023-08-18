@@ -84,25 +84,25 @@ class VideoPlayerActivity: ComponentActivity() {
                         initialized = true
                     }
                     if (initialized)
-                        DanmakuControl()
+                        DanmakuControl(danmakuView)
                 }
             }
         }
         val flagsFullScreen = WindowManager.LayoutParams.FLAG_FULLSCREEN
         window.addFlags(flagsFullScreen); // 设置全屏
     }
-    @Composable
-    fun DanmakuControl() {
-        Column(Modifier.fillMaxHeight()) {
-            var visibility by remember {
-                mutableStateOf(danmakuView.isVisible)
-            }
-            IconButton(onClick = {
-                danmakuView.visibility = if (visibility) View.INVISIBLE else View.VISIBLE
-                visibility = danmakuView.isVisible
-            }) {
-                Icon(painter = painterResource(id = if (visibility) R.drawable.danmaku_off else R.drawable.danmaku_on), contentDescription = "", tint = Blue)
-            }
+}
+@Composable
+fun DanmakuControl(danmakuView: DanmakuView) {
+    Column(Modifier.fillMaxHeight()) {
+        var visibility by remember {
+            mutableStateOf(danmakuView.isVisible)
+        }
+        IconButton(onClick = {
+            danmakuView.visibility = if (visibility) View.INVISIBLE else View.VISIBLE
+            visibility = danmakuView.isVisible
+        }) {
+            Icon(painter = painterResource(id = if (visibility) R.drawable.danmaku_off else R.drawable.danmaku_on), contentDescription = "", tint = Blue)
         }
     }
 }

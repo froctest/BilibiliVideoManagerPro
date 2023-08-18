@@ -3,6 +3,7 @@ package com.frstudio.bilibilivideomanagerpro.ui.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,9 +29,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import com.frstudio.bilibilivideomanagerpro.app
 import com.frstudio.bilibilivideomanagerpro.core.video.VideoPlayer
 import com.frstudio.bilibilivideomanagerpro.utils.OneTenthSec
-import com.frstudio.bilibilivideomanagerpro.utils.formatMilliseconds
 import com.frstudio.bilibilivideomanagerpro.utils.sec
-import kotlinx.coroutines.delay
 
 class DingzhenActivity: ComponentActivity() {
 
@@ -48,6 +46,7 @@ class DingzhenActivity: ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val videoUri = intent.getStringExtra("videoUri")!!.toUri()
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContent {
             DingzhenPage(videoUri = videoUri)
         }
@@ -62,16 +61,7 @@ fun DingzhenPage(videoUri: Uri) {
     var player: ExoPlayer? by remember {
         mutableStateOf(null)
     }
-    LaunchedEffect(key1 = player) {
-        var exoPlayer: ExoPlayer? = null
-        while (player?.also { exoPlayer = player } != null) {
-            delay(10)
-            val pos = exoPlayer!!.currentPosition
-            posText = formatMilliseconds(pos)
-        }
-    }
     DingzhenPage(
-        pos = posText,
         forward10sec = { player?.seekToOffset(10.sec) },
         forward1sec = { player?.seekToOffset(1.sec) },
         forwardOneTenthSec = { player?.seekToOffset(1.OneTenthSec) },
@@ -92,7 +82,6 @@ fun DingzhenPage(videoUri: Uri) {
 @Preview(device = "spec:parent=pixel_5,orientation=landscape")
 @Composable
 fun DingzhenPage(
-    pos: String = "12:05/12:00",
     forward10sec: () -> Unit = {},
     forward1sec: () -> Unit = {},
     forwardOneTenthSec: () -> Unit = {},
@@ -163,7 +152,7 @@ fun DingzhenPage(
     }
 }
 
-private fun ExoPlayer.seekToOffset(offsetMs: Long) {
+fun ExoPlayer.seekToOffset(offsetMs: Long) {
     var positionMs: Long = currentPosition + offsetMs
     val durationMs: Long = duration
     if (durationMs != C.TIME_UNSET) {
