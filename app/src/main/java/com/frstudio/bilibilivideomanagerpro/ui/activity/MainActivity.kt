@@ -128,6 +128,7 @@ class MainActivity : ComponentActivity() {
                                 items(projects) {project ->
                                     Card(modifier = Modifier.padding(4.dp)) {
                                         SizeAnimatedContent(targetValue = (showProject == project), trueContent = {
+                                            //展开
                                             var willFixPage: BiliVideoProjectPage? by remember {
                                                 mutableStateOf(null)
                                             }
@@ -142,6 +143,7 @@ class MainActivity : ComponentActivity() {
                                                 }
                                             }
                                         }) {
+                                            //未展开
                                             Box {
                                                 BiliVideoListItem(project = project) {
                                                     showProject = if (showProject == project) null else project
