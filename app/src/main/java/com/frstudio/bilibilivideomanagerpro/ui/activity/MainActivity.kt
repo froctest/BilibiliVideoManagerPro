@@ -36,12 +36,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.documentfile.provider.DocumentFile
 import com.frstudio.bilibilivideomanagerpro.app
+import com.frstudio.bilibilivideomanagerpro.compent.IO
 import com.frstudio.bilibilivideomanagerpro.compent.OnBackPress
 import com.frstudio.bilibilivideomanagerpro.core.BiliDirSaved
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProject
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProjectPage
-import com.frstudio.bilibilivideomanagerpro.core.requireStoragePermission
 import com.frstudio.bilibilivideomanagerpro.core.getBiliVideoProject
+import com.frstudio.bilibilivideomanagerpro.core.requireStoragePermission
 import com.frstudio.bilibilivideomanagerpro.ui.BiliVideoInfoPage
 import com.frstudio.bilibilivideomanagerpro.ui.GreenPoint
 import com.frstudio.bilibilivideomanagerpro.ui.SizeAnimatedContent
@@ -125,7 +126,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .pullRefresh(state)) {
                             LazyColumn() {
-                                items(projects) {project ->
+                                items(projects, key = { it.bvid}) {project ->
                                     Card(modifier = Modifier.padding(4.dp)) {
                                         SizeAnimatedContent(targetValue = (showProject == project), trueContent = {
                                             //展开
@@ -145,7 +146,11 @@ class MainActivity : ComponentActivity() {
                                         }) {
                                             //未展开
                                             Box {
-                                                BiliVideoListItem(project = project) {
+                                                BiliVideoListItem(project = project, dismiss = {
+                                                    Log.e("DEL", it.root.name!!)
+                                                    projects.remove(it)
+                                                    IO { it.delete() }
+                                                }) {
                                                     showProject = if (showProject == project) null else project
                                                 }
                                                 var showGreenPoint by remember(project) {

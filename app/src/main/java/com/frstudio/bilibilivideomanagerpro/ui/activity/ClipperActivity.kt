@@ -65,7 +65,7 @@ class ClipperActivity : ComponentActivity() {
         val justVideo = page.justVideo.uri
         val justAudio = page.justAudio.uri
         val mux = page.mux?.uri
-        val danmaku = page.danmakuFile.uri
+        val danmaku = page.danmakuFile?.uri
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContent {
             BilibiliVideoManagerProTheme {

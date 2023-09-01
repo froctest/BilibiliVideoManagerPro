@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,13 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.frstudio.bilibilivideomanagerpro.compent.DismissX
 import com.frstudio.bilibilivideomanagerpro.core.BiliVideoProject
 import com.frstudio.bilibilivideomanagerpro.core.NetworkImage
 import com.frstudio.bilibilivideomanagerpro.utils.formatMilliseconds
 import com.frstudio.bilibilivideomanagerpro.utils.storage
 
 @Composable
-fun BiliVideoListItem(modifier: Modifier = Modifier, project: BiliVideoProject, clicked: () -> Unit) {
+fun LazyItemScope.BiliVideoListItem(modifier: Modifier = Modifier, project: BiliVideoProject, dismiss: (BiliVideoProject) -> Unit = {}, clicked: () -> Unit) {
     val entry = project.entry
     BiliVideoListItem(
         modifier = modifier,
@@ -35,6 +37,9 @@ fun BiliVideoListItem(modifier: Modifier = Modifier, project: BiliVideoProject, 
         entry.owner_name,
         entry.owner_avatar,
         pageCount = project.pageCount,
+        dismiss = {
+            dismiss(project)
+        },
         clicked
     )
 }
@@ -42,7 +47,7 @@ fun BiliVideoListItem(modifier: Modifier = Modifier, project: BiliVideoProject, 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
-fun BiliVideoListItem(
+fun LazyItemScope.BiliVideoListItem(
     modifier: Modifier = Modifier,
     title: String = "视频标题",
     coverUrl: String = "http://i2.hdslb.com/bfs/archive/a7feade2d3464bce826f2e48e7699fe0bab2a411.jpg",
@@ -52,31 +57,35 @@ fun BiliVideoListItem(
     upName: String = "UP主",
     owner_avatarUrl: String = "https://i0.hdslb.com/bfs/face/e24e4ac984f7d29f88ff279e14fd4bb2a609d06d.jpg",
     pageCount: Int = 3,
+    dismiss: () -> Unit = {},
     clicked: () -> Unit = {}
 ) {
     Card(modifier = modifier
         .fillMaxWidth()
         .animateContentSize(), onClick = clicked) {
-        VideoInfo(title, coverUrl, duration, downloadBytes, totalBytes, pageCount)
+        VideoInfo(title, coverUrl, duration, downloadBytes, totalBytes, pageCount, dismiss)
         UpInfo(Modifier.padding(6.dp), upName, owner_avatarUrl)
     }
 }
 
 @Preview
 @Composable
-fun VideoInfo(
+fun LazyItemScope.VideoInfo(
     title: String = "视频标题",
     coverUrl: String = "http://i2.hdslb.com/bfs/archive/a7feade2d3464bce826f2e48e7699fe0bab2a411.jpg",
     duration: Long = 67437834,
     downloadBytes: Long = 114514,
     totalBytes: Long = 114514,
-    pageCount: Int = 3
+    pageCount: Int = 3,
+    dismiss: () -> Unit = {}
 ) {
     Column() {
         Row() {
-            NetworkImage(url = coverUrl, modifier = Modifier
-                .size(60.dp)
-                .clip(CircleShape))
+            DismissX(dismiss) {
+                NetworkImage(url = coverUrl, modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape))
+            }
             Column() {
                 Text(text = title)
                 Row() {

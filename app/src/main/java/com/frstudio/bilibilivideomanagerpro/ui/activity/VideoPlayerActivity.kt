@@ -40,12 +40,12 @@ class VideoPlayerActivity: ComponentActivity() {
          * 启动VideoPlayerActivity用的
          */
         fun launch(page: BiliVideoProjectPage) {
-            launch(page.justVideo.uri, page.justAudio.uri, page.mux!!.uri, danmaku = page.danmakuFile.uri)
+            launch(page.justVideo.uri, page.justAudio.uri, page.mux!!.uri, danmaku = page.danmakuFile?.uri)
         }
         /**
          * 启动VideoPlayerActivity用的
          */
-        fun launch(justVideo: Uri, justAudio: Uri, mux: Uri? = null, danmaku: Uri) {
+        fun launch(justVideo: Uri, justAudio: Uri, mux: Uri? = null, danmaku: Uri?) {
             val intent = Intent()
             intent.setClass(app, VideoPlayerActivity::class.java)
                 .putExtra("justVideo", justVideo.toString())

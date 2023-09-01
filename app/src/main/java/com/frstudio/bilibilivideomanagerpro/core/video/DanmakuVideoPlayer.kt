@@ -30,14 +30,14 @@ fun DanmakuVideoPlayer(page: BiliVideoProjectPage) = DanmakuVideoPlayer(
     justVideo = page.justVideo.uri,
     justAudio = page.justAudio.uri,
     mux = page.mux?.uri,
-    danmaku = page.danmakuFile.uri
+    danmaku = page.danmakuFile?.uri
 )
 
 /**
  * 可能会回调两次resultPlayer
  */
 @Composable
-fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, mux: Uri?, danmaku: Uri, error: (PlaybackException) -> Unit = {}, result: (ExoPlayer, DanmakuView) -> Unit = { _,_ -> }) {
+fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, mux: Uri?, danmaku: Uri?, error: (PlaybackException) -> Unit = {}, result: (ExoPlayer, DanmakuView) -> Unit = { _,_ -> }) {
     var isError by remember {
         mutableStateOf(false)
     }
@@ -53,7 +53,7 @@ fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, mux: Uri?, danmaku: Uri, 
     }
 }
 @Composable
-fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, danmaku: Uri, error: (PlaybackException) -> Unit = {}, result: (ExoPlayer, DanmakuView) -> Unit = { _,_ -> }) {
+fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, danmaku: Uri?, error: (PlaybackException) -> Unit = {}, result: (ExoPlayer, DanmakuView) -> Unit = { _,_ -> }) {
     var musicPlayer: MediaPlayer? by remember {
         mutableStateOf(null)
     }
@@ -74,7 +74,7 @@ fun DanmakuVideoPlayer(justVideo: Uri, justAudio: Uri, danmaku: Uri, error: (Pla
 @Composable
 fun DanmakuVideoPlayer(
     uri: Uri,
-    danmaku: Uri,
+    danmaku: Uri?,
     start: (Long) -> Unit = {},
     pause: () -> Unit = {},
     seek: (Long) -> Unit = {},
@@ -124,8 +124,10 @@ fun DanmakuVideoPlayer(
 
             })
         }
-        Danmaku(danmaku) {
-            danmakuView = it
+        if (danmaku != null) {
+            Danmaku(danmaku) {
+                danmakuView = it
+            }
         }
         LaunchedEffect(exoPlayer, danmakuView) {
             val exoPlayer2 = exoPlayer

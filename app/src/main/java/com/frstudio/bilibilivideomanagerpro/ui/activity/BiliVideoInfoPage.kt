@@ -55,18 +55,18 @@ class BiliVideoInfoActivity: ComponentActivity() {
 @Composable
 fun BiliVideoInfoPage(page: BiliVideoProjectPage) {
     val danmaku by remember {
-        mutableStateOf(DanmakuData(page.danmakuFile))
+        mutableStateOf(page.danmakuFile?.let { DanmakuData(page.danmakuFile) })
     }
     val export = exportJustAudio(page)
     var showDanmakuDialog by remember(page) {
         mutableStateOf(false)
     }
-    if (showDanmakuDialog) DanmakuViewer(DanmakuData(page.danmakuFile)) {
+    if (showDanmakuDialog && danmaku != null) DanmakuViewer(danmaku!!) {
         showDanmakuDialog = false
     }
     BiliVideoInfoPage(
         title = page.title,
-        danmakuCount = danmaku.size,
+        danmakuCount = danmaku?.size?:-1,
         intentPlayVideoActivity = { VideoPlayerActivity.launch(page) },
         showDanmaku = {
             showDanmakuDialog = true

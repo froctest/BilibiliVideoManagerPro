@@ -8,6 +8,10 @@ import com.google.gson.Gson
 fun getBiliVideoProject(dir: DocumentFile) = BiliVideoProject(dir)
 
 data class BiliVideoProject(val root: DocumentFile) {
+    val exists get() = root.exists()
+    fun delete() {
+        root.delete()
+    }
     val pages = root.listFiles().mapNotNull {
         try {
             BiliVideoProjectPage(it)
@@ -63,7 +67,7 @@ data class BiliVideoProject(val root: DocumentFile) {
 
 data class BiliVideoProjectPage(val pageDir: DocumentFile) {
     val entryJsonFile = pageDir.findFile("entry.json")!!
-    val danmakuFile = pageDir.findFile("danmaku.xml")!!
+    val danmakuFile = pageDir.findFile("danmaku.xml")
     val videoDir = pageDir.listFiles().filter { it.isDirectory }[0]
     val justVideo = videoDir.findFile("video.m4s")!!
     val justAudio = videoDir.findFile("audio.m4s")!!
